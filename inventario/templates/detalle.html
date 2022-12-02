@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/lista_productos_style.css' %}">
+<div class="container-fluid" style="margin-top: 58px">
+    <div class="row contenedor_row justify-content-center">
+        <div class="col-3 filtros_seccion">
+            <h1>Filtros</h1>
+            <form class="form_12" method="get">
+                {% csrf_token %}
+                {{ lista_productos.form }}
+                <button class="submit_bt btn btn-primary btn-lg" type="submit">Filtrar</button>
+            </form>
+        </div>
+        <div class="col-8 productos_seccion">
+            <div class="card-deck"> 
+                {% for i in lista_productos.qs %}
+                    <div class="card" style="min-width:250px;max-width:500px;">
+                        <img class="card-img-top" src="{{i.foto.url}}" >
+                        <div class="card-body">
+                            <h1 class="card-title">{{i.nombre}} - {{i.marca}}</h1>
+                            <h6 class="card-subtitle">{{i.tipo}}, {{i.talla}}, {{i.color}}</h6>
+                            <a href="{{i.get_absolute_url}}" class="btn btn-primary">Ver producto</a>
+                        </div>
+                    </div>
+                
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+{% endblock %}
